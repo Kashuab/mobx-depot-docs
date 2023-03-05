@@ -1,6 +1,7 @@
 import {Box, Text, Heading, UnorderedList, ListItem, Link, Code, OrderedList} from "@chakra-ui/react";
 import {MDXProvider} from "@mdx-js/react";
 import {Navigation, NavigationItem} from "~/components/Navigation";
+import Head from "next/head";
 
 type DocsProps = {
   children: React.ReactNode;
@@ -34,6 +35,13 @@ const components = {
 export default function Docs(props: DocsProps) {
   return (
     <Box pt={20} display="flex" flex={1}>
+      <Head>
+        <title>MobX Depot</title>
+        <meta name="description" content="Scaffold your GraphQL schema with MobX powered models." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <Navigation>
         <NavigationItem href="/docs/get-started">Get started</NavigationItem>
         <NavigationItem href="/docs/models">Models</NavigationItem>
@@ -46,10 +54,18 @@ export default function Docs(props: DocsProps) {
       <Box
         p={8}
         minHeight="100%"
+        maxWidth="100%"
         color="white"
-        sx={{ '.ch-code code': { display: 'block' } }}
+        sx={{
+          '.ch-code': {
+            overflow: 'auto',
+            code: {
+              display: 'block'
+            }
+          }
+      }}
       >
-        <Box as="main">
+        <Box as="main" maxWidth="100%">
           <MDXProvider components={components}>
             {props.children}
           </MDXProvider>

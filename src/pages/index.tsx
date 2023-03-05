@@ -19,7 +19,7 @@ export default function Home() {
 
           <Heading
             color="white"
-            fontSize={{ base: "2xl", md: "7xl" }}
+            fontSize={{ base: "4xl", md: "7xl" }}
             background="linear-gradient(to bottom right, #5801E3 0%, #FC4646 100%)"
             backgroundClip="text"
             textAlign="center"
@@ -28,7 +28,7 @@ export default function Home() {
             MobX Depot
           </Heading>
 
-          <Text color="white" fontSize="2xl">
+          <Text color="white" fontSize="2xl" textAlign="center">
             Supercharge your GraphQL API interactions with MobX
           </Text>
 
@@ -43,7 +43,7 @@ export default function Home() {
             </Button>
           </Box>
 
-          <Box display="flex" alignItems="center" gap={8}>
+          <Box display="flex" alignItems="center" gap={8} flexWrap="wrap" justifyContent="center">
             <Image src="https://img.shields.io/npm/v/mobx-depot?style=for-the-badge" />
             <Image src="https://img.shields.io/github/last-commit/Kashuab/mobx-depot?style=for-the-badge" />
           </Box>

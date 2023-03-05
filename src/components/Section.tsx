@@ -18,8 +18,9 @@ export function Section(props: SectionProps) {
       <Box
         minHeight="60rem"
         width={fullWidth ? "100%" : "100rem"}
+        maxWidth="100%"
         mx="auto"
-        padding={16}
+        padding={{ base: 8, md: 16 }}
         display="flex"
         flexDirection="column"
         justifyContent="center"

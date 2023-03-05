@@ -3,6 +3,8 @@ import {Box, ChakraProvider} from "@chakra-ui/react";
 import {NavigationBar} from "~/components/NavigationBar";
 import {theme} from "~/theme/theme";
 
+import './styles/index.css';
+
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
@@ -14,6 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
         minHeight="100vh"
         display="flex"
         flexDirection="column"
+        maxWidth="100%"
       >
         <Component {...pageProps} />
       </Box>
