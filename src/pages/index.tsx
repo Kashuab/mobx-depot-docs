@@ -13,8 +13,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Box>
-        <Section alignItems="center">
+      <Box display="flex" flexDirection="column">
+        <Section alignItems="center" fullWidth>
           <Image src="/MobX Depot Logo.svg" />
 
           <Heading

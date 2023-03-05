@@ -1,0 +1,138 @@
+import Docs from "~/pages/docs";
+
+# Models
+
+Each object type in your GraphQL schema is converted into two things: a `BaseModel` class, and a `Model` subclass.
+The `BaseModel` class contains the fields from your schema, as well as some helper methods (we'll get into that later.)
+
+For example, given the following schema:
+
+```graphql
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+}
+```
+
+This will generate the following `BaseModel`:
+
+```ts
+// Do not edit any BaseModel! They are generated automatically and will be overwritten.
+export class UserBaseModel {
+  @Selectable() id!: ID;
+  @Selectable() firstName!: string;
+  @Selectable() lastName!: string;
+  @Selectable() email!: string;
+
+  // ... constructor, helper methods, etc...
+}
+```
+
+And the following `Model`:
+
+```ts
+// Feel free to add any fields or methods! Try not to touch the constructor, however.
+export class UserModel extends UserBaseModel {
+  constructor(init: Partial<UserModel> = {}) {
+    super(init);
+
+    makeModelObservable(this);
+  }
+}
+```
+
+You can instantiate a `UserModel` like so:
+
+```ts
+const user = new UserModel({
+  firstName: "John",
+  lastName: "Doe",
+  email: "johndoe@example.com"
+});
+```
+
+## Adding logic to a model
+
+You can add any fields or methods to your `Model` class. For example, you can add a `fullName` computed property:
+
+```ts
+export class UserModel extends UserBaseModel {
+  constructor(init: Partial<UserModel> = {}) {
+    super(init);
+
+    makeModelObservable(this);
+  }
+
+  get fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+}
+```
+
+This is super valuable because any data returned from mutations and queries will get deeply converted into
+their respective `Model` instances. This means you can conveniently access any fields or methods you've added to your
+`Model` class.
+
+### What is `@Selectable`?
+
+The `@Selectable` decorator adds logic that throws an error if you try to access a field that was not selected from a
+query. This helps you avoid optional chaining and other null checks all over your code.
+
+For example, given the following query:
+
+```graphql
+query {
+  user {
+    id
+    name
+  }
+}
+```
+
+If you try to access `user.email`, you'll get an error:
+
+```ts
+// Imagine `user` is a `UserModel` instance that was returned from a query
+user.email; // Error: Field "email" is not selected
+```
+
+This is ideal, as it keeps your code clean and prevents your logic from silently producing invalid results.
+
+### What is `makeModelObservable`?
+
+You may have noticed that generated models use `makeModelObservable` from `mobx-depot` instead of `makeAutoObservable`.
+MobX has limitations regarding the use of `makeAutoObservable` with subclasses. `makeModelObservable` works around this
+limitation by determining the required annotations by traversing over `this` and its prototypes, then providing them to
+`makeObservable`.
+
+**Do not use this in your own code.** This works for us because:
+
+- We're not extending an external class
+- `BaseModel`s are designed to be inherited from, and are not meant to be instantiated directly
+
+[See relevant MobX discussion for more details.](https://github.com/mobxjs/mobx/discussions/2850#discussioncomment-5022315)
+
+### `wontfix`
+
+I'd like to emphasize [@urugator's comment](https://github.com/mobxjs/mobx/discussions/2850#discussioncomment-498925):
+
+> [...] this is not a suggested way to go, therefore I don't want to promote it in any way. Whatever you expose, some
+> people will use it, twist it, misuse it, and in the end it will always come back to you, no matter the warnings.
+> Automatic behavior provides convenience for common/simple cases. If it can't support inheritance reliably, the
+> responsible thing to do is either not introducing automatic behavior in the first place (no longer an option) or to
+> forbid cases that could lead to issues.
+>
+> I am quite convinced that the cost of using makeObservable instead of makeAutoObservable (or even better getting rid
+> of inheritance) for these ~10 classes , will be lower than the cost of introducing and maintaining any workaround.
+
+Any usage of `makeModelObservable` outside of the sole purpose of extending `BaseModel`s is unsupported. Any issues
+regarding non-generated usage of `makeModelObservable` will be closed as `wontfix`.
+
+I have yet to find a case where this doesn't work. If you do, _please open an issue!_
+
+
+
+
+export default (props) => <Docs {...props} />;

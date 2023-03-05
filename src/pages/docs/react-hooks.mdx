@@ -1,0 +1,231 @@
+import Docs from "~/pages/docs";
+
+# React hooks
+
+`mobx-depot` provides a set of React hooks for a variety of use-cases.
+
+## `useQuery`
+
+Given the following schema:
+
+```graphql
+type Todo {
+  id: ID!
+  title: String!
+  content: String!
+}
+
+type Query {
+  todos: [Todo!]!
+}
+```
+
+You can import `useQuery` and use it like this:
+
+```tsx
+import { observer } from 'mobx-react-lite';
+import { useQuery } from "mobx-depot";
+import { TodosQuery } from '../models/depot/queries/TodosQuery';
+
+export const TodoList = observer(() => {
+  const { data, loading } = useQuery(() => new TodosQuery(todo => todo.title.content));
+
+  return (
+    <div className="TodoList">
+      {loading && <div>Loading...</div>}
+
+      {data?.todos.map(todo => ( // NOTE! `todo` is a `TodoModel` :D
+        <div className="Todo">
+          <h1>{todo.title}</h1>
+          <p>{todo.content}</p>
+        </div>
+      ))}
+    </div>
+  )
+});
+```
+
+## `useMutation`
+
+Given the following schema:
+
+```graphql
+type Todo {
+  id: ID!
+  title: String!
+  content: String!
+}
+
+input UpdateTodoInput {
+  title: String
+  content: String
+}
+
+type Mutation {
+  updateTodo(id: ID!, todo: UpdateTodoInput!): Todo
+}
+```
+
+```tsx
+import { observer } from 'mobx-react-lite';
+import { TodoModel } from '../models/TodoModel';
+import { useMutation } from "mobx-depot";
+
+type EditTodoFormProps = {
+  todo: TodoModel;
+}
+
+export const EditTodoForm = observer(({ todo }: EditTodoFormProps) => {
+  const { data, loading, dispatch } = useMutation(
+    () => new UpdateTodoMutation(
+      { id: todo.id, todo: { title: todo.title, content: todo.content } },
+      todo => todo.title.content,
+    ),
+    {
+      onSuccess: (data) => {
+        console.log(data);
+        alert('Updated todo!')
+      },
+    }
+  );
+
+  return (
+    <div className="EditTodoForm">
+      {loading && <p>Loading...</p>}
+
+      <input value={todo.title} onChange={e => todo.set('title', e.target.value)} />
+      <textarea value={todo.content} onChange={e => todo.set('content', e.target.value)} />
+
+      <button onClick={dispatch}>Save</button>
+    </div>
+  )
+});
+```
+
+> **Note:** See our usage of `todo.set`? The `set` method comes from `TodoBaseModel` as a built-in action.
+
+I heavily recommend putting the `UpdateTodoMutation` instantiation within a method on your model. This keeps components
+dumb!
+
+```tsx
+// src/models/TodoModel.ts
+import { UpdateTodoMutation } from '../models/depot/mutations/UpdateTodoMutation';
+
+export class TodoModel extends TodoBaseModel {
+  constructor(init: Partial<TodoBaseModel> = {}) {
+    super(init);
+
+    makeModelObservable(this);
+  }
+
+  get isComplete() {
+    return !!this.completedAt;
+  }
+
+  save() {
+    return new UpdateTodoMutation(
+      { title: this.title, content: this.content },
+      todo => todo.title.content
+    );
+  }
+}
+```
+
+```tsx
+// src/components/EditTodoForm.tsx
+
+...
+
+export const EditTodoForm = observer(({ todo }: EditTodoFormProps) => {
+  const { data, loading, dispatch } = useMutation(() => todo.save(), {
+    onSuccess: (data) => {
+      console.log(data);
+      alert('Updated todo!')
+    },
+  });
+
+  return (
+    <div className="EditTodoForm">
+      {loading && <p>Loading...</p>}
+
+      <input value={todo.title} onChange={e => todo.set('title', e.target.value)} />
+      <textarea value={todo.content} onChange={e => todo.set('content', e.target.value)} />
+
+      <button onClick={dispatch}>Save</button>
+    </div>
+  )
+});
+```
+
+> **Note:** Do not pass `todo.save` directly into `useMutation` (`useMutation(todo.save)`). This will cause the method to lose its context,
+> thus any usage of `this` will inevitably fail. Use an arrow function, or bind the method to the instance.
+> (i.e. `() => todo.save()`, `todo.save.bind(todo)`)
+
+You can dispatch the `Mutation` if your model needs to handle the response, however it gets a bit interesting:
+
+```tsx
+export class TodoModel extends TodoBaseModel {
+  constructor(init: Partial<TodoBaseModel> = {}) {
+    super(init);
+
+    makeModelObservable(this);
+  }
+
+  get isComplete() {
+    return !!this.completedAt;
+  }
+
+  save() {
+    const mutation = new UpdateTodoMutation(
+      { title: this.title, content: this.content },
+      todo => todo.title.content
+    );
+
+    mutation.mutate().then(todo => {
+      // Handle the result
+    });
+
+    return mutation;
+  }
+}
+```
+
+> **Note: You do not need to manually update your instance.** If your instance knows its ID (which is automatically selected by
+> generated queries/mutations,) and the GraphQL query returns that same ID in the payload the `RootStore` will
+> automatically reconcile the data in any existing instances.
+
+As you can see, the `save` method stays synchronous so it can return the `mutation` to the `useMutation` hook.
+This allows your components to stay updated when the state of the `mutation` changes.
+
+However, if you don't plan on handling the intermediate state of the mutation, you can use `async/await`:
+
+```tsx
+export class TodoModel extends TodoBaseModel {
+  constructor(init: Partial<TodoBaseModel> = {}) {
+    super(init);
+
+    makeModelObservable(this);
+  }
+
+  get isComplete() {
+    return !!this.completedAt;
+  }
+
+  async save() {
+    const mutation = new UpdateTodoMutation(
+      { title: this.title, content: this.content },
+      todo => todo.title.content
+    );
+
+    await mutation.mutate();
+  }
+}
+```
+
+> **Note: `useMutation` does not work with async functions.** Its sole purpose is to handle the lifecycle of a mutation.
+> If you're handling it yourself by `await`ing the `mutate` method, it's expected that you're handling the result on
+> your own.
+
+
+
+export default (props) => <Docs {...props} />;

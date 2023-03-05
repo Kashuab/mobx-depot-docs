@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/mobx-depot-next.iml" filepath="$PROJECT_DIR$/.idea/mobx-depot-next.iml" />
       <module fileurl="file://$PROJECT_DIR$/../mobx-gql-store/.idea/mobx-gql-store.iml" filepath="$PROJECT_DIR$/../mobx-gql-store/.idea/mobx-gql-store.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../todo-api/.idea/todo-api.iml" filepath="$PROJECT_DIR$/../todo-api/.idea/todo-api.iml" />
     </modules>
   </component>
 </project>

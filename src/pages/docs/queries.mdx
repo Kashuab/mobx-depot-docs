@@ -1,0 +1,124 @@
+import Docs from "~/pages/docs";
+
+# Querying data
+
+The `Query` type in your GraphQL schema contains each query that you can dispatch. `mobx-depot` converts each query
+into its own class.
+
+For example, given the following schema:
+
+```graphql
+type Query {
+  user(id: ID!): User
+}
+```
+
+This will generate a `UserQuery` class that you can use as such:
+
+```js
+import { UserQuery } from "~/models/depot/queries/UserQuery";
+
+const userQuery = new UserQuery(
+  // Query arguments
+  { id: 1 },
+  // Select the fields you want to retrieve
+  user => user.name.email
+);
+
+userQuery.query().then(user => {
+  // user is a UserModel, which is a MobX observable
+  // It can also be null, as described by the schema
+});
+```
+
+## Query builder
+
+When constructing queries and mutations with `mobx-depot`, in order to select which fields to retrieve you need to
+provide a function that returns the fields you want to retrieve. Type annotations are provided for your convenience.
+
+```ts
+import { UserQuery } from "~/models/depot/queries/UserQuery";
+
+const userQuery = new UserQuery(
+  { id: 1 },
+  user => user.name.email.createdAt.updatedAt
+);
+```
+
+This function will generate the following document:
+
+```graphql
+query UserQuery($id: ID!) {
+  user(id: $id) {
+    name
+    email
+    createdAt
+    updatedAt
+  }
+}
+```
+
+However this can be shortened by using the `primitives` key, instead of listing all the fields:
+
+```ts
+const userQuery = new UserQuery(
+  { id: 1 },
+  user => user.primitives
+);
+```
+
+This will generate the same document.
+
+### Nested objects
+
+Given the following schema:
+
+```graphql
+type User {
+  name: String
+  email: String
+  address: Address
+}
+
+type Address {
+  street: String
+  city: String
+  country: String
+}
+```
+
+The query builder provides functions to select fields within nested objects:
+
+```ts
+const userQuery = new UserQuery(
+  { id: 1 },
+  user => user.name.address(address => address.street.city.country).email
+);
+```
+
+This will generate the following document:
+
+```graphql
+query UserQuery($id: ID!) {
+  user(id: $id) {
+    name
+    email
+    address {
+      street
+      city
+      country
+    }
+  }
+}
+```
+
+Again, this can be shortened by using the `primitives` key:
+
+```ts
+const userQuery = new UserQuery(
+  { id: 1 },
+  user => user.primitives.address(address => address.primitives)
+);
+```
+
+export default (props) => <Docs {...props} />;

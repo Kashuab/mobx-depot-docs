@@ -1,0 +1,48 @@
+import Docs from "~/pages/docs";
+
+# Mutations
+
+The `Mutation` type in your GraphQL schema contains each mutation that you can dispatch. `mobx-depot` converts each
+mutation into its own class.
+
+For example, given the following schema:
+
+```graphql
+input CreateUserInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User
+}
+```
+
+This will generate a `CreateUserMutation` class that you can use as such:
+
+```js
+import { CreateUserMutation } from "~/models/depot/mutations/CreateUserMutation";
+
+const createUser = new CreateUserMutation(
+  // Mutation arguments
+  {
+    input: {
+      firstName: "John",
+      lastName: "Doe",
+      email: "johndoe@example.com",
+      password: "abracadabra"
+    }
+  },
+  // Select the fields you want to retrieve
+  user => user.name.email
+);
+
+createUser.mutate().then(user => {
+  // user is a UserModel, which is a MobX observable
+  // It can also be null, as described by the schema
+});
+```
+
+export default (props) => <Docs {...props} />;

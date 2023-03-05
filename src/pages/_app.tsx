@@ -1,12 +1,12 @@
 import type { AppProps } from 'next/app'
 import {Box, ChakraProvider} from "@chakra-ui/react";
-import {Navigation} from "~/components/Navigation";
+import {NavigationBar} from "~/components/NavigationBar";
 import {theme} from "~/theme/theme";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
-      <Navigation />
+      <NavigationBar />
 
       <Box
         backgroundColor="gray.900"

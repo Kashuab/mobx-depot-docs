@@ -1,33 +1,49 @@
-import {Box, Image, Link, Text} from "@chakra-ui/react";
-import {BsGithub} from "react-icons/bs";
+import {Box} from "@chakra-ui/react";
+import {useRouter} from "next/router";
 
-export function Navigation() {
+type NavigationProps = {
+  children: React.ReactNode
+}
+
+export function Navigation(props: NavigationProps) {
+  const { children } = props
+
   return (
     <Box
-      position="fixed"
-      top={0}
-      left={0}
-      width="100%"
+      width="20rem"
+      borderRight="1px solid"
+      borderRightColor="gray.600"
+      flexShrink={0}
       display="flex"
-      alignItems="center"
-      padding={4}
-      backgroundColor="blackAlpha.200"
-      borderBottom="1px solid"
-      borderBottomColor="gray.600"
-      backdropFilter="auto"
-      backdropBlur="20px"
-      zIndex={10}
+      flexDirection="column"
     >
-      <Link href="/" display="flex" alignItems="center">
-        <Image src="/mobx-depot-flat.svg" height={12} alt="MobX Depot Logo" mr={4} />
+      {children}
+    </Box>
+  )
+}
 
-        <Text color="white" fontSize="xl" fontWeight="bold">MobX Depot</Text>
-      </Link>
+type NavigationItemProps = {
+  href: string
+  children: React.ReactNode
+}
 
-      <Box ml="auto">
-        <Link href="https://github.com/Kashuab/mobx-depot" isExternal>
-          <BsGithub size="3rem" color="white" />
-        </Link>
+export function NavigationItem(props: NavigationItemProps) {
+  const { href, children } = props
+
+  const router = useRouter();
+
+  const isActive = href === router.pathname;
+
+  return (
+    <Box
+      as="a"
+      href={href}
+      color={isActive ? "helium.green.500" : "white"}
+      fontWeight={isActive ? "bold" : "normal"}
+      borderBottomColor="gray.600"
+    >
+      <Box py={3} px={4} backgroundColor={isActive ? "whiteAlpha.100" : "none"}>
+        {children}
       </Box>
     </Box>
   )

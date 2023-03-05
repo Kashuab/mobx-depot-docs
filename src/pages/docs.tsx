@@ -1,5 +1,6 @@
-import {Box, Text, Heading, UnorderedList, ListItem, Link, Code} from "@chakra-ui/react";
+import {Box, Text, Heading, UnorderedList, ListItem, Link, Code, OrderedList} from "@chakra-ui/react";
 import {MDXProvider} from "@mdx-js/react";
+import {Navigation, NavigationItem} from "~/components/Navigation";
 
 type DocsProps = {
   children: React.ReactNode;
@@ -10,23 +11,37 @@ const components = {
                                background="linear-gradient(to bottom right, #FC4646 0%, #5801E3 100%)"
                                backgroundClip="text" {...props} />,
   h2: (props: any) => <Heading as="h2" size="lg" mb={6} mt={10} color="helium.green.500" {...props} />,
-  h3: (props: any) => <Heading as="h3" size="md" mb={4} mt={6} {...props} />,
+  h3: (props: any) => <Heading as="h3" size="md" mb={4} mt={8} {...props} />,
   h4: (props: any) => <Heading as="h4" size="sm" mb={4} mt={6} {...props} />,
-  p: (props: any) => <Text my={4} {...props} />,
+  p: (props: any) => <Text my={4} maxW="50rem" {...props} />,
   ul: (props: any) => <UnorderedList {...props} my={8} pl={4} sx={{ 'ul': { my: 0 }}} />,
+  ol: (props: any) => <OrderedList {...props} my={8} pl={4} sx={{ 'ol': { my: 0 }}} />,
   li: (props: any) => <ListItem {...props} mb={2} />,
   a: (props: any) => <Link color="helium.blue.500" {...props} />,
-  code: (props: any) => <Code backgroundColor="whiteAlpha.100" color="helium.red.300" {...props} />,
+  code: (props: any) => <Code backgroundColor="whiteAlpha.100" color="helium.red.300" fontSize="inherit" {...props} />,
+  blockquote: (props: any) => (
+    <Box
+      as="blockquote"
+      borderLeft="4px solid"
+      borderColor="helium.purple.500"
+      pl={4}
+      color="gray.400"
+      {...props}
+    />
+  ),
 }
 
 export default function Docs(props: DocsProps) {
   return (
     <Box pt={20} display="flex" flex={1}>
-      <Box p={4} width="20rem" borderRight="1px solid" borderRightColor="gray.600" flexShrink={0}>
-        <Box as="a" href="/docs/get-started" color="white">
-          Get started
-        </Box>
-      </Box>
+      <Navigation>
+        <NavigationItem href="/docs/get-started">Get started</NavigationItem>
+        <NavigationItem href="/docs/models">Models</NavigationItem>
+        <NavigationItem href="/docs/queries">Queries</NavigationItem>
+        <NavigationItem href="/docs/mutations">Mutations</NavigationItem>
+        <NavigationItem href="/docs/root-store">Root store</NavigationItem>
+        <NavigationItem href="/docs/react-hooks">React hooks</NavigationItem>
+      </Navigation>
 
       <Box
         p={8}
@@ -34,11 +49,11 @@ export default function Docs(props: DocsProps) {
         color="white"
         sx={{ '.ch-code code': { display: 'block' } }}
       >
-        <MDXProvider components={components}>
-          <main>
+        <Box as="main">
+          <MDXProvider components={components}>
             {props.children}
-          </main>
-        </MDXProvider>
+          </MDXProvider>
+        </Box>
       </Box>
     </Box>
   )
