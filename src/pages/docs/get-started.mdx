@@ -1,0 +1,88 @@
+import Docs from "~/pages/docs";
+
+# Get started
+
+Assuming you already have `react` installed...
+
+- `yarn add mobx-depot mobx graphql graphql-request`
+
+Next, add enable experimental decorators to your `tsconfig.json`:
+
+```json
+{
+  ... // other config
+  "compilerOptions": {
+    ... // other options
+    "experimentalDecorators": true
+  }
+}
+```
+
+## Generate code
+
+- `yarn mobx-depot generate http://localhost:3000/graphql --outDir src/models`
+- (You can also provide a path to a `schema.graphql` or `introspection.json` file)
+
+This will generate a `src/models` directory with the following structure:
+
+- `depot` (Don't touch anything in here. `generate` will overwrite this whole directory!)
+  - `base`
+    - `XBaseModel.ts`
+    - `YBaseModel.ts`
+    - `ZBaseModel.ts`
+  - `inputs`
+    - `SomeOperationInput.ts`
+  - `mutations`
+    - `SomeOperationMutation.ts`
+  - `queries`
+    - `SomeOperationQuery.ts`
+  - `hooks.ts`
+  - `rootStore.tsx`
+  - `scalars.ts`
+- `XModel.ts` (You can edit these!)
+- `YModel.ts`
+- `ZModel.ts`
+
+### CLI options
+
+- `--include User,Post,Comment` Whitelist object types to be generated into models (Comma-separated values)
+- `--exclude UserMetadata,PostAnalytics` Blacklist object types from being generated into models (Comma-separated values)
+
+Only use one or the other, it doesn't make much sense to use both `--include` and `--exclude`.
+
+- `--react true|false` Include React utilities in generated output (defaults to true)
+- `--idFieldName` Name of the field used to identify object types (defaults to "id")
+
+You can reference these anytime in the CLI: `yarn mobx-depot --help generate`
+
+## Setup your app root
+
+Your app will have some sort of `src/App.tsx`. You will need to:
+
+- Initialize a `GraphQLClient` from `graphql-request`
+- Pass the client into `setGraphQLClient` exported from the generated root store (`models/depot/rootStore`)
+
+```tsx
+import { GraphQLClient } from "graphql-request";
+import { setGraphQLClient } from './models/depot/rootStore';
+
+// This may be different if you're not using Vite, or have some other environment variable for this.
+const API_URL = import.meta.env.VITE_API_URL;
+
+const client = new GraphQLClient(API_URL);
+
+setGraphQLClient(client);
+
+export const App = () => {
+  return (
+    <div className="App">
+      {/* ... */}
+    </div>
+  )
+}
+```
+
+Now you're ready to get cooking!
+
+
+export default ({ children }) => <Docs>{children}</Docs>

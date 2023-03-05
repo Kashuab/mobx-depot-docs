@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/mobx-depot-next.iml" filepath="$PROJECT_DIR$/.idea/mobx-depot-next.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../mobx-gql-store/.idea/mobx-gql-store.iml" filepath="$PROJECT_DIR$/../mobx-gql-store/.idea/mobx-gql-store.iml" />
     </modules>
   </component>
 </project>
