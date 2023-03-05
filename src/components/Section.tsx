@@ -20,7 +20,7 @@ export function Section(props: SectionProps) {
         width={fullWidth ? "100%" : "100rem"}
         maxWidth="100%"
         mx="auto"
-        padding={{ base: 8, md: 16 }}
+        padding={{ base: 8, xl: 16 }}
         display="flex"
         flexDirection="column"
         justifyContent="center"

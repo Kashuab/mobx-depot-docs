@@ -13,9 +13,9 @@ export function Navigation(props: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Box flexShrink={0} flexGrow={1}>
+    <Box flexShrink={0}>
       <Button
-        display={{ base: "block", md: "none" }}
+        display={{ base: "block", xl: "none" }}
         p={3}
         position="fixed"
         top={20}
@@ -42,18 +42,18 @@ export function Navigation(props: NavigationProps) {
         borderRightColor="gray.600"
         display="flex"
         flexDirection="column"
-        position={{ base: "fixed", md: "static" }}
+        position={{ base: "fixed", xl: "static" }}
         backgroundColor="blackAlpha.200"
         backdropFilter="auto"
         backdropBlur="20px"
-        transform={{ base: isOpen ? "translateX(0)" : "translateX(-100%)", md: "none" }}
+        transform={{ base: isOpen ? "translateX(0)" : "translateX(-100%)", xl: "none" }}
         zIndex={9}
         height="100%"
         transition="transform 0.2s ease-out"
       >
         {children}
 
-        <NavigationItem onClick={() => setIsOpen(false)} display={{ base: 'block', md: 'none' }}>
+        <NavigationItem onClick={() => setIsOpen(false)} display={{ base: 'block', xl: 'none' }}>
           <FiX size={20} />
           Close
         </NavigationItem>

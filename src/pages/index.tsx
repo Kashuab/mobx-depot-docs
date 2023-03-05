@@ -19,7 +19,7 @@ export default function Home() {
 
           <Heading
             color="white"
-            fontSize={{ base: "4xl", md: "7xl" }}
+            fontSize={{ base: "4xl", xl: "7xl" }}
             background="linear-gradient(to bottom right, #5801E3 0%, #FC4646 100%)"
             backgroundClip="text"
             textAlign="center"

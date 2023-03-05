@@ -52,7 +52,9 @@ export default function Docs(props: DocsProps) {
       </Navigation>
 
       <Box
-        p={8}
+        px={{ base: 8, xl: 16 }}
+        pt={{ base: 8, xl: 0 }}
+        pb={16}
         minHeight="100%"
         maxWidth="100%"
         color="white"

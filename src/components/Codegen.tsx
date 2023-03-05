@@ -20,13 +20,13 @@ export function Codegen() {
           display="flex"
           gap={12}
           alignItems="start"
-          flexDirection={{ base: "column", md: "row" }}
+          flexDirection={{ base: "column", xl: "row" }}
         >
           <CodeCard>
             <Image src="/GraphQL.svg" height={16} alt="GraphQL Logo" />
 
             <CodeCardContent>
-              <Heading color="pink.400" mb={4} fontFamily="monospace" fontSize={{ base: 'xl', md: '3xl' }}>Post</Heading>
+              <Heading color="pink.400" mb={4} fontFamily="monospace" fontSize={{ base: 'xl', xl: '3xl' }}>Post</Heading>
 
               <Text>id: ID!</Text>
               <Text>title: String!</Text>
@@ -34,7 +34,7 @@ export function Codegen() {
             </CodeCardContent>
           </CodeCard>
 
-          <CodeCard>
+          <CodeCard offset>
             <Icon
               position="absolute"
               width={16}
@@ -43,7 +43,7 @@ export function Codegen() {
               left={-8}
               transform="rotate(90deg)"
               color="pink.400"
-              display={{ base: 'none', md: 'block' }}
+              display={{ base: 'none', xl: 'block' }}
             >
               <BsArrow90DegRight />
             </Icon>
@@ -51,7 +51,7 @@ export function Codegen() {
             <Image src="/mobx.svg" height={16} alt="MobX Logo" />
 
             <CodeCardContent>
-              <Heading color="pink.400" mb={4} fontFamily="monospace" fontSize={{ base: 'xl', md: '3xl' }}>class PostModel</Heading>
+              <Heading color="pink.400" mb={4} fontFamily="monospace" fontSize={{ base: 'xl', xl: '3xl' }}>class PostModel</Heading>
 
               <Text>id: string</Text>
               <Text>title: string</Text>
@@ -64,13 +64,13 @@ export function Codegen() {
           display="flex"
           gap={12}
           alignItems="start"
-          flexDirection={{ base: "column", md: "row" }}
+          flexDirection={{ base: "column", xl: "row" }}
         >
           <CodeCard>
             <Image src="/GraphQL.svg" height={16} alt="GraphQL Logo" />
 
             <CodeCardContent>
-              <Heading color="pink.400" fontFamily="monospace" fontSize={{ base: 'xl', md: '3xl' }}>createPost</Heading>
+              <Heading color="pink.400" fontFamily="monospace" fontSize={{ base: 'xl', xl: '3xl' }}>createPost</Heading>
               <Text color="pink.400">post: Post</Text>
               <Text color="pink.400" mb={4}>userErrors: [UserError]</Text>
 
@@ -78,7 +78,7 @@ export function Codegen() {
             </CodeCardContent>
           </CodeCard>
 
-          <CodeCard>
+          <CodeCard offset>
             <Icon
               position="absolute"
               width={16}
@@ -87,7 +87,7 @@ export function Codegen() {
               left={-8}
               transform="rotate(90deg)"
               color="pink.400"
-              display={{ base: 'none', md: 'block' }}
+              display={{ base: 'none', xl: 'block' }}
             >
               <BsArrow90DegRight />
             </Icon>
@@ -95,7 +95,7 @@ export function Codegen() {
             <Image src="/mobx.svg" height={16} alt="MobX Logo" />
 
             <CodeCardContent>
-              <Heading color="pink.400" mb={4} fontFamily="monospace" fontSize={{ base: 'xl', md: '3xl' }}>class CreatePostMutation</Heading>
+              <Heading color="pink.400" mb={4} fontFamily="monospace" fontSize={{ base: 'xl', xl: '3xl' }}>class CreatePostMutation</Heading>
 
               <Text>args: CreatePostMutationArguments</Text>
               <Text>loading: boolean</Text>
@@ -108,19 +108,19 @@ export function Codegen() {
           display="flex"
           gap={12}
           alignItems="start"
-          flexDirection={{ base: "column", md: "row" }}
+          flexDirection={{ base: "column", xl: "row" }}
         >
           <CodeCard>
             <Image src="/GraphQL.svg" height={16} alt="GraphQL Logo" />
 
             <CodeCardContent>
-              <Heading color="pink.400" fontFamily="monospace" fontSize={{ base: 'xl', md: '3xl' }}>posts</Heading>
+              <Heading color="pink.400" fontFamily="monospace" fontSize={{ base: 'xl', xl: '3xl' }}>posts</Heading>
               <Text color="pink.400" mb={4}>posts: [Post]</Text>
               <Text>sortBy: String</Text>
             </CodeCardContent>
           </CodeCard>
 
-          <CodeCard>
+          <CodeCard offset>
             <Icon
               position="absolute"
               width={16}
@@ -129,7 +129,7 @@ export function Codegen() {
               left={-8}
               transform="rotate(90deg)"
               color="pink.400"
-              display={{ base: 'none', md: 'block' }}
+              display={{ base: 'none', xl: 'block' }}
             >
               <BsArrow90DegRight />
             </Icon>
@@ -137,7 +137,7 @@ export function Codegen() {
             <Image src="/mobx.svg" height={16} alt="MobX Logo" />
 
             <CodeCardContent>
-              <Heading color="pink.400" mb={4} fontFamily="monospace" fontSize={{ base: 'xl', md: '3xl' }}>class PostsQuery</Heading>
+              <Heading color="pink.400" mb={4} fontFamily="monospace" fontSize={{ base: 'xl', xl: '3xl' }}>class PostsQuery</Heading>
 
               <Text>args: PostsQueryArguments</Text>
               <Text>loading: boolean</Text>
@@ -150,25 +150,30 @@ export function Codegen() {
   )
 }
 
-export function CodeCard({ children }: PropsWithChildren) {
+type CodeCardProps = PropsWithChildren & {
+  offset?: boolean;
+}
+
+export function CodeCard({ children, offset = false }: CodeCardProps) {
   return (
     <Box
-      padding={{ base: 6, md: 12 }}
+      padding={{ base: 6, xl: 12 }}
+      marginTop={{ base: 0, xl: offset ? "8rem" : 0 }}
       border="1px solid"
       borderColor="gray.600"
-      borderRadius={{ base: 6, md: 12 }}
+      borderRadius={{ base: 6, xl: 12 }}
       display="flex"
-      flexDirection={{ base: "column", md: "row" }}
-      gap={{ base: 4, md: 12 }}
+      flexDirection={{ base: "column", xl: "row" }}
+      gap={{ base: 4, xl: 12 }}
       justifyContent="start"
       position="relative"
-      width={{ base: '100%', md: 'auto' }}
-      overflowX="auto"
+      width={{ base: '100%', xl: 'auto' }}
+      overflowX={{ base: "auto", xl: 'visible' }}
       maxWidth="100%"
       sx={{
         'img': {
-          width: { base: '32px', md: 'auto' },
-          height: { base: '32px', md: 'auto' },
+          width: { base: '32px', xl: 16 },
+          height: { base: '32px', xl: 16 },
         }
       }}
     >
@@ -182,7 +187,7 @@ export function CodeCardContent({ children }: PropsWithChildren) {
     <Box
       borderColor="gray.600"
       fontFamily="monospace"
-      fontSize={{ base: 'md', md: 'xl' }}
+      fontSize={{ base: 'md', xl: 'xl' }}
       color="pink.200"
       paddingTop={2}
     >
