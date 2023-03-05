@@ -11,7 +11,7 @@ export function Codegen() {
       </Heading>
 
       <Text color="white" fontSize="xl">
-        When we receive your specs, you'll get blueprints delivered on-time or your money back.
+        When we receive your specs, {"you'll"} get blueprints delivered on-time or your money back.
       </Text>
 
       <Box display="flex" flexDirection="column" gap={16} mt={6}>

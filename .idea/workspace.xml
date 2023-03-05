@@ -26,11 +26,14 @@
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "C:/Users/Kyle/RubymineProjects/mobx-gql-store",
     "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "yarn",
     "ruby.rails.projectView.checked": "true",
+    "settings.editor.selected.configurable": "settings.javascript.linters.eslint",
     "ts.external.directory.path": "C:\\Users\\Kyle\\RubymineProjects\\mobx-depot-next\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
@@ -43,7 +46,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1678005373333</updated>
-      <workItem from="1678005374358" duration="2244000" />
+      <workItem from="1678005374358" duration="2436000" />
     </task>
     <servers />
   </component>
