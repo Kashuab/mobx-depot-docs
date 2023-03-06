@@ -75,6 +75,25 @@ This is super valuable because any data returned from mutations and queries will
 their respective `Model` instances. This means you can conveniently access any fields or methods you've added to your
 `Model` class.
 
+## Mutating data within a model
+
+You can mutate data within a model by using the built-in `set` method:
+
+```ts
+const user = new UserModel({});
+
+user.set('firstName', 'John');
+user.set('lastName', 'Doe');
+```
+
+You can also using the `assign` method for merging an object into the instance:
+
+```ts
+const user = new UserModel({});
+
+user.assign({ firstName: 'John', lastName: 'Doe' });
+```
+
 ### What is `@Selectable`?
 
 The `@Selectable` decorator adds logic that throws an error if you try to access a field that was not selected from a
@@ -99,6 +118,18 @@ user.email; // Error: Field "email" is not selected
 ```
 
 This is ideal, as it keeps your code clean and prevents your logic from silently producing invalid results.
+
+#### Getting selected data
+
+If you'd like to get an object containing the data that has been selected, you can use the `selectedData` getter:
+
+```ts
+const userQuery = new UserQuery(user => user.name.email);
+
+userQuery.query().then(user => {
+  console.log(user.selectedData); // { id: '1', name: 'John', email: 'johndoe@example.com' }
+});
+```
 
 ### What is `makeModelObservable`?
 
