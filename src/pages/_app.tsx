@@ -9,7 +9,7 @@ import './styles/index.css';
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
-      <GoogleAnalytics />
+      <GoogleAnalytics trackPageViews />
       <ChakraProvider theme={theme}>
         <NavigationBar />
 
