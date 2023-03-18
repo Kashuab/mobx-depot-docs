@@ -40,6 +40,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "yarn",
     "ruby.rails.projectView.checked": "true",
+    "ruby.structure.view.model.defaults.configured": "true",
     "settings.editor.selected.configurable": "settings.javascript.linters.eslint",
     "ts.external.directory.path": "C:\\Users\\Kyle\\RubymineProjects\\mobx-depot-next\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
@@ -59,7 +60,8 @@
       <option name="presentableId" value="Default" />
       <updated>1678005373333</updated>
       <workItem from="1678005374358" duration="3609000" />
-      <workItem from="1678047883800" duration="13493000" />
+      <workItem from="1678047883800" duration="13512000" />
+      <workItem from="1679161724732" duration="4297000" />
     </task>
     <servers />
   </component>

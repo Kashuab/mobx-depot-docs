@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import {Box, Button, Heading, Image, Text} from "@chakra-ui/react";
+import {Box, Button, Heading, Image, Link, Text} from "@chakra-ui/react";
 import {Section} from "~/components/Section";
 import {Codegen} from "~/components/Codegen";
 
@@ -29,7 +29,7 @@ export default function Home() {
           </Heading>
 
           <Text color="white" fontSize="2xl" textAlign="center">
-            Supercharge your GraphQL API interactions with MobX
+            Scaffold a reactive data store with your GraphQL schema.
           </Text>
 
           <Box display="flex" alignItems="center" gap={8}>
@@ -44,8 +44,27 @@ export default function Home() {
           </Box>
 
           <Box display="flex" alignItems="center" gap={8} flexWrap="wrap" justifyContent="center">
-            <Image src="https://img.shields.io/npm/v/mobx-depot?style=for-the-badge" />
-            <Image src="https://img.shields.io/github/last-commit/Kashuab/mobx-depot?style=for-the-badge" />
+            <Link isExternal href="https://npmjs.com/package/mobx-depot">
+              <Image
+                alt="NPM version"
+                src="https://img.shields.io/npm/v/mobx-depot?style=for-the-badge"
+              />
+            </Link>
+
+            <Link isExternal href="https://github.com/Kashuab/mobx-depot">
+              <Image
+                alt="Last commit date"
+                src="https://img.shields.io/github/last-commit/Kashuab/mobx-depot?style=for-the-badge"
+              />
+            </Link>
+
+
+            <Link isExternal href="https://bundlephobia.com/package/mobx-depot">
+              <Image
+                alt="GZipped size"
+                src="https://img.shields.io/bundlephobia/minzip/mobx-depot?style=for-the-badge"
+              />
+            </Link>
           </Box>
         </Section>
 
