@@ -21,10 +21,10 @@ This will generate the following `BaseModel`:
 ```ts
 // Do not edit any BaseModel! They are generated automatically and will be overwritten.
 export class UserBaseModel {
-  @Selectable() id!: ID;
-  @Selectable() firstName!: string;
-  @Selectable() lastName!: string;
-  @Selectable() email!: string;
+  @Selectable() declare id: ID;
+  @Selectable() declare firstName: string;
+  @Selectable() declare lastName: string;
+  @Selectable() declare email: string;
 
   // ... constructor, helper methods, etc...
 }
@@ -86,7 +86,7 @@ user.set('firstName', 'John');
 user.set('lastName', 'Doe');
 ```
 
-You can also using the `assign` method for merging an object into the instance:
+You can also use the `assign` method for merging an object into the instance:
 
 ```ts
 const user = new UserModel({});

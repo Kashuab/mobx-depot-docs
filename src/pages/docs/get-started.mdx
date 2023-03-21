@@ -4,9 +4,9 @@ import Docs from "~/pages/docs";
 
 Assuming you already have `react` installed...
 
-- `yarn add mobx-depot mobx graphql graphql-request`
+- `yarn add mobx-depot mobx graphql`
 
-Next, add enable experimental decorators to your `tsconfig.json`:
+Next, enable experimental decorators in your `tsconfig.json`:
 
 ```json
 {
@@ -57,21 +57,20 @@ You can reference these anytime in the CLI: `yarn mobx-depot --help generate`
 
 ## Setup your app root
 
-Your app will have some sort of `src/App.tsx`. You will need to:
-
-- Initialize a `GraphQLClient` from `graphql-request`
-- Pass the client into `setGraphQLClient` exported from the generated root store (`models/depot/rootStore`)
+Your app will have some sort of `src/App.tsx`. You will need to initialize the client `mobx-depot` will use to
+make requests to your GraphQL API.
 
 ```tsx
-import { GraphQLClient } from "graphql-request";
-import { setGraphQLClient } from './models/depot/rootStore';
+import { initializeDepotClient } from './models/depot/rootStore';
 
 // This may be different if you're not using Vite, or have some other environment variable for this.
 const API_URL = import.meta.env.VITE_API_URL;
 
-const client = new GraphQLClient(API_URL);
-
-setGraphQLClient(client);
+initializeDepotClient(API_URL, {
+  // You can pass in any options that `graphql-request` supports, however there's an extra "defaultCachePolicy" option.
+  // "cache-and-network" is the default, but you can change it if you want.
+  defaultCachePolicy: 'cache-and-network',
+});
 
 export const App = () => {
   return (
@@ -82,7 +81,9 @@ export const App = () => {
 }
 ```
 
-Now you're ready to get cooking!
+`initializeDepotClient` will initialize a `DepotGQLClient`, which is basically a wrapper around `graphql-request`'s
+`GraphQLClient` that adds support for caching of responses.
 
+Now you're ready to get cooking!
 
 export default ({ children }) => <Docs>{children}</Docs>

@@ -22,7 +22,13 @@ const userQuery = new UserQuery(
   // Query arguments
   { id: 1 },
   // Select the fields you want to retrieve
-  user => user.name.email
+  user => user.name.email,
+  // Optionally provide any applicable options, currently there's only a "cachePolicy" property:
+  {
+    // By default, the query will use the value you provided when calling initializeDepotClient
+    // (which defaults to "cache-and-network")
+    cachePolicy: "network-only"
+  }
 );
 
 userQuery.query().then(user => {

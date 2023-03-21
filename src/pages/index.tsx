@@ -58,7 +58,6 @@ export default function Home() {
               />
             </Link>
 
-
             <Link isExternal href="https://bundlephobia.com/package/mobx-depot">
               <Image
                 alt="GZipped size"

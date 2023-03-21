@@ -48,6 +48,10 @@ But what if there's state within the local `UserModel` that you want to preserve
 method that allows you to replace an existing model instance with another one. Here's an example:
 
 ```ts
+import { getRootStore } from './depot/rootStore';
+
+const rootStore = getRootStore();
+
 class UserModel extends UserBaseModel {
   password = "";
 
@@ -71,7 +75,7 @@ class UserModel extends UserBaseModel {
 
       // 2. Replace the RootStore's instance with this local one.
       // `this.store` is a reference to the `RootStore`, which is provided by the `UserBaseModel`.
-      this.store.replace(response.data.createUser, this);
+      rootStore.replace(response.data.createUser, this);
     });
   }
 }
