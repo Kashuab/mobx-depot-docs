@@ -97,9 +97,9 @@ export function Codegen() {
             <CodeCardContent>
               <Heading color="pink.400" mb={4} fontFamily="monospace" fontSize={{ base: 'xl', xl: '3xl' }}>class CreatePostMutation</Heading>
 
-              <Text>args: CreatePostMutationArguments</Text>
+              <Text>variables: CreatePostMutationVariables</Text>
               <Text>loading: boolean</Text>
-              <Text>async mutate(): {"Promise<CreatePostMutationPayload>"}</Text>
+              <Text>async dispatch(): {"Promise<CreatePostMutationPayload>"}</Text>
             </CodeCardContent>
           </CodeCard>
         </Box>
@@ -139,9 +139,9 @@ export function Codegen() {
             <CodeCardContent>
               <Heading color="pink.400" mb={4} fontFamily="monospace" fontSize={{ base: 'xl', xl: '3xl' }}>class PostsQuery</Heading>
 
-              <Text>args: PostsQueryArguments</Text>
+              <Text>variables: PostsQueryVariables</Text>
               <Text>loading: boolean</Text>
-              <Text>async query(): {"Promise<PostsQueryPayload>"}</Text>
+              <Text>async dispatch(): {"Promise<PostsQueryPayload>"}</Text>
             </CodeCardContent>
           </CodeCard>
         </Box>
