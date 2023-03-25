@@ -53,10 +53,12 @@ The `RootStore` is responsible for holding all known instances of `Model` classe
 through the `RootStore#resolve` method, which deeply finds and updates/instantiates all applicable models within the
 `response.data`.
 
-The `DepotGQLClient`, which is responsible for sending GQL requests, has a minimal cache store that does not provide
+The `DepotGQLClient`, which is responsible for handling GQL requests, has a minimal cache store that does not provide
 any public methods at your disposal. This is on purpose -- since the cache store contains references to instances
 maintained by the `RootStore`. This is ideal, considering if a mutation causes a known instance to update, it also
 updates the cache of any applicable query automatically since the references are shared.
+
+If you want to manually update an instance as a result of a mutation, you'd interact with the `RootStore` directly.
 
 ### Cache behavior walkthrough
 
@@ -75,9 +77,9 @@ console.log(user.firstName); // "John"
 console.log(user.lastName); // "Smith"
 ```
 
-The `UserQuery` is dispatched, and the `cache-and-network` policy is used. The cache is checked, and since it's empty,
-the network request is dispatched. The response is received, and the `RootStore` is updated with the new `User` instance.
-The `User` instance is also cached in the `DepotGQLClient` cache store.
+The `UserQuery` is dispatched, and the `cache-and-network` policy is used. The cache is checked (which yields nothing),
+then the network request is dispatched. The response is received, and the `RootStore` is updated with the new `User`
+instance. The instance is also cached in the `DepotGQLClient` cache store.
 
 Now, let's update the user with an `UpdateUserMutation`:
 

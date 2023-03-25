@@ -26,7 +26,7 @@ const components = {
       borderLeft="4px solid"
       borderColor="helium.purple.500"
       pl={4}
-      color="gray.400"
+      color="white"
       {...props}
     />
   ),

@@ -66,10 +66,14 @@ type Mutation {
 }
 ```
 
+This generates a `TodoModel` as well as an `UpdateTodoMutation`. Import `useMutation` and use it like so:
+
 ```tsx
 import { observer } from 'mobx-react-lite';
-import { TodoModel } from '../models/TodoModel';
 import { useMutation } from "mobx-depot";
+
+import { TodoModel } from '../models/TodoModel';
+import { UpdateTodoMutation } from '../models/depot/mutations/UpdateTodoMutation';
 
 type EditTodoFormProps = {
   todo: TodoModel;
@@ -104,6 +108,45 @@ export const EditTodoForm = observer(({ todo }: EditTodoFormProps) => {
 
 > **Note:** See our usage of `todo.set`? The `set` method comes from `TodoBaseModel` as a built-in action.
 
+## Provide arguments to `dispatch`
+
+You can provide arguments to `dispatch` by defining them in the `useMutation` hook:
+
+```tsx
+export const TodoList = observer(({ todos }) => {
+  const { data, loading, dispatch } = useMutation(
+    (id: string) => new DeleteTodoMutation(
+      { id },
+      todo => todo.title.content,
+    ),
+    {
+      onSuccess: (data) => {
+        console.log(data);
+        alert('Deleted todo!')
+      },
+    }
+  );
+
+  return (
+    <div className="TodoList">
+      {loading && <div>Loading...</div>}
+
+      {todos.map(todo => (
+        <div className="Todo">
+          <h1>{todo.title}</h1>
+          <p>{todo.content}</p>
+          <button onClick={() => dispatch(todo.id)}>Delete</button>
+        </div>
+      ))}
+    </div>
+  )
+});
+```
+
+As you can see, this is helpful when you need to call `dispatch` when looping through data.
+
+## Best practices with `Mutation` classes
+
 I heavily recommend putting the `UpdateTodoMutation` instantiation within a method on your model. This keeps components
 dumb!
 
@@ -123,6 +166,8 @@ export class TodoModel extends TodoBaseModel {
   }
 
   save() {
+    // NOTE: As-is, this does not dispatch the operation. By returning the mutation we're expecting
+    // the component to dispatch it via `useMutation`.
     return new UpdateTodoMutation(
       { title: this.title, content: this.content },
       todo => todo.title.content
