@@ -27,30 +27,81 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Kyle/RubymineProjects/mobx-depot-next",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.standard": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "ruby.rails.projectView.checked": "true",
-    "ruby.structure.view.model.defaults.configured": "true",
-    "settings.editor.selected.configurable": "settings.javascript.linters.eslint",
-    "ts.external.directory.path": "C:\\Users\\Kyle\\RubymineProjects\\mobx-depot-next\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Kyle/RubymineProjects/mobx-depot-next&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;C:/Users/Kyle/RubymineProjects/mobx-gql-store/node_modules/jest&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;ruby.rails.projectView.checked&quot;: &quot;true&quot;,
+    &quot;ruby.structure.view.model.defaults.configured&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.linters.eslint&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Kyle\\RubymineProjects\\mobx-depot-next\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Kyle\RubymineProjects\mobx-depot-next\src\pages\docs" />
     </key>
+  </component>
+  <component name="RunManager" selected="Jest.DepotGQLClient.can update the cache with a mutation">
+    <configuration name="DepotGQLClient" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/../mobx-gql-store/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/../mobx-gql-store" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/../mobx-gql-store/src/__tests__/DepotGQLClient.test.ts" />
+      <test-names>
+        <test-name value="DepotGQLClient" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="DepotGQLClient.can cache a response from a server" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/../mobx-gql-store/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/../mobx-gql-store" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/../mobx-gql-store/src/__tests__/DepotGQLClient.test.ts" />
+      <test-names>
+        <test-name value="DepotGQLClient" />
+        <test-name value="can cache a response from a server" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="DepotGQLClient.can update the cache with a mutation" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/../mobx-gql-store/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/../mobx-gql-store" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/../mobx-gql-store/src/__tests__/DepotGQLClient.test.ts" />
+      <test-names>
+        <test-name value="DepotGQLClient" />
+        <test-name value="can update the cache with a mutation" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Jest.DepotGQLClient.can update the cache with a mutation" />
+        <item itemvalue="Jest.DepotGQLClient.can cache a response from a server" />
+        <item itemvalue="Jest.DepotGQLClient" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -65,7 +116,11 @@
       <workItem from="1679161724732" duration="4909000" />
       <workItem from="1679254581113" duration="4929000" />
       <workItem from="1679259841312" duration="7204000" />
-      <workItem from="1679377784730" duration="464000" />
+      <workItem from="1679377784730" duration="897000" />
+      <workItem from="1679708605504" duration="99000" />
+      <workItem from="1679708734979" duration="5786000" />
+      <workItem from="1679720128507" duration="2238000" />
+      <workItem from="1679780093767" duration="1797000" />
     </task>
     <servers />
   </component>

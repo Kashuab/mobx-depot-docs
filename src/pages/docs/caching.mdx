@@ -1,0 +1,119 @@
+import Docs from "~/pages/docs";
+
+# Cache management
+
+`mobx-depot` supports a handful of cache policies.
+
+### `"cache-first"`
+If the cache hit is successful, use the cached result and **do not** dispatch a network request.
+Otherwise, send the request and cache the result.
+
+### `"cache-only"`
+If the cache hit is successful, use the cached result, otherwise **throw an error.**
+
+### `"cache-and-network"`
+Yield a cache hit immediately, but still send request and update cache in the background.
+
+### `"network-only"`
+Do not yield a cached result, but dispatch a request and update the cache.
+
+### `"no-cache"`
+Skip cache, dispatch a network request and **don't cache** the response.
+
+## Configuring cache policies
+
+To set the default cache policy for all queries, use the `defaultCachePolicy` option:
+
+```ts
+import { initializeDepotClient } from 'path/to/models/depot/rootStore';
+
+initializeDepotClient('http://your-api.com', {
+  defaultCachePolicy: 'cache-first',
+});
+```
+
+If you need a specific cache policy for a given query, you can pass a `cachePolicy` option in the `Query` constructor:
+
+```ts
+import { PostQuery } from 'path/to/models/depot/queries/PostQuery';
+
+const query = new PostQuery(
+  post => post.title.content,
+  { cachePolicy: 'cache-first' }
+);
+
+query.dispatch().then(result => {
+  // ...
+});
+```
+
+## How does the cache work?
+
+The `RootStore` is responsible for holding all known instances of `Model` classes. Every GQL operation response goes
+through the `RootStore#resolve` method, which deeply finds and updates/instantiates all applicable models within the
+`response.data`.
+
+The `DepotGQLClient`, which is responsible for sending GQL requests, has a minimal cache store that does not provide
+any public methods at your disposal. This is on purpose -- since the cache store contains references to instances
+maintained by the `RootStore`. This is ideal, considering if a mutation causes a known instance to update, it also
+updates the cache of any applicable query automatically since the references are shared.
+
+### Cache behavior walkthrough
+
+Let's go through an example! I'll be omitting things like imports and other boilerplate code for brevity.
+
+```ts
+const userQuery = new UserQuery(
+  user => user.firstName.lastName.email,
+ { cachePolicy: 'cache-and-network' },
+);
+
+const user = await userQuery.dispatch();
+
+console.log(user.id); // "1"
+console.log(user.firstName); // "John"
+console.log(user.lastName); // "Smith"
+```
+
+The `UserQuery` is dispatched, and the `cache-and-network` policy is used. The cache is checked, and since it's empty,
+the network request is dispatched. The response is received, and the `RootStore` is updated with the new `User` instance.
+The `User` instance is also cached in the `DepotGQLClient` cache store.
+
+Now, let's update the user with an `UpdateUserMutation`:
+
+```ts
+const updateUserMutation = new UpdateUserMutation(
+  { firstName: 'Joe', lastName: 'Mama' },
+  user => user.firstName.lastName.email,
+);
+
+const updatedUser = await updateUserMutation.dispatch();
+
+console.log(updatedUser.id); // "1"
+console.log(updatedUser.firstName); // "Joe"
+console.log(updatedUser.lastName); // "Mama"
+```
+
+The `UpdateUserMutation` is dispatched, and the `RootStore` is updated with the new `User` instance. The `User` instance
+is also cached in the `DepotGQLClient` cache store. Since the response contains a `User` with the same `id`, the cache
+for the `UserQuery` is updated with the new data. This is because the `RootStore` maintains a single instance for the
+`User`, and the cache store contains a reference to that same instance.
+
+Now, let's dispatch the `UserQuery` again, and use `autorun` from `mobx` so we can observe the `userQuery.data`:
+
+```ts
+autorun(() => {
+  console.log(userQuery.data.user.firstName);
+  // "Joe" (cached), then "Joe" again (network)
+});
+
+await userQuery.dispatch();
+```
+
+We'd get two `"Joe"` logs. Why is this? Let's break it down:
+
+1. The `UserQuery` is dispatched, and the `cache-and-network` policy is used.
+2. The cache is checked, and since it's not empty, the cached `User` instance is returned immediately.
+3. The network request is dispatched, and the new response is received with the updated data.
+
+export default ({ children }) => <Docs>{children}</Docs>

@@ -48,6 +48,7 @@ export default function Docs(props: DocsProps) {
         <NavigationItem href="/docs/queries">Queries</NavigationItem>
         <NavigationItem href="/docs/mutations">Mutations</NavigationItem>
         <NavigationItem href="/docs/root-store">Root store</NavigationItem>
+        <NavigationItem href="/docs/caching">Caching</NavigationItem>
         <NavigationItem href="/docs/react-hooks">React hooks</NavigationItem>
       </Navigation>
 
