@@ -226,7 +226,7 @@ export class TodoModel extends TodoBaseModel {
       todo => todo.title.content
     );
 
-    mutation.mutate().then(todo => {
+    mutation.dispatch().then(todo => {
       // Handle the result
     });
 
@@ -262,7 +262,7 @@ export class TodoModel extends TodoBaseModel {
       todo => todo.title.content
     );
 
-    await mutation.mutate();
+    await mutation.dispatch();
   }
 }
 ```

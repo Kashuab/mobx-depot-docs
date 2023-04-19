@@ -126,7 +126,7 @@ If you'd like to get an object containing the data that has been selected, you c
 ```ts
 const userQuery = new UserQuery(user => user.name.email);
 
-userQuery.query().then(user => {
+userQuery.dispatch().then(user => {
   console.log(user.selectedData); // { id: '1', name: 'John', email: 'johndoe@example.com' }
 });
 ```

@@ -31,7 +31,7 @@ const userQuery = new UserQuery(
   }
 );
 
-userQuery.query().then(user => {
+userQuery.dispatch().then(user => {
   // user is a UserModel, which is a MobX observable
   // It can also be null, as described by the schema
 });

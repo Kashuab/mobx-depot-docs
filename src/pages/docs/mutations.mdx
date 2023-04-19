@@ -39,7 +39,7 @@ const createUser = new CreateUserMutation(
   user => user.name.email
 );
 
-createUser.mutate().then(user => {
+createUser.dispatch().then(user => {
   // user is a UserModel, which is a MobX observable
   // It can also be null, as described by the schema
 });

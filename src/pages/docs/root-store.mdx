@@ -31,7 +31,7 @@ with the same ID, the existing record will be updated with the new data.
 Of course, as a result of MobX's reactivity, any components or logic that is observing any affected records will
 automatically update.
 
-## New data is duplicated
+## Gotcha: New data can get duplicated
 
 Consider the following scenario:
 
@@ -63,7 +63,7 @@ class UserModel extends UserBaseModel {
       }
     });
 
-    createUser.mutate().then((response) => {
+    createUser.dispatch().then((response) => {
       // Problem: response.data.createUser is a new instance of the `UserModel` that the `RootStore` resolved.
       // It is not the same instance as `this`. The solution is to copy the data from the server's instance,
       // and replace the one in the `RootStore` with this.
