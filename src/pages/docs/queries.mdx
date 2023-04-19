@@ -19,7 +19,7 @@ This will generate a `UserQuery` class that you can use as such:
 import { UserQuery } from "~/models/depot/queries/UserQuery";
 
 const userQuery = new UserQuery(
-  // Query arguments
+  // Query variables
   { id: 1 },
   // Select the fields you want to retrieve
   user => user.name.email,
@@ -50,6 +50,22 @@ userQuery.dispatch({ id: 3 })
 
 userQuery.dispatch({ id: 4 })
 ```
+
+Sometimes when instantiating a query you may not know what variables it will use. In this case you can provide `null`
+in the constructor:
+
+```ts
+const userQuery = new UserQuery(
+  // We don't know the query arguments yet!
+  null,
+  user => user.name.email,
+);
+
+// ... We did some stuff, and now we know what ID we want:
+userQuery.dispatch({ id: 1 })
+```
+
+**If you call `dispatch` without ever providing variables, it will throw an error at runtime.**
 
 ## Query builder
 

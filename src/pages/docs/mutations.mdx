@@ -69,4 +69,29 @@ createUser.dispatch({
 })
 ```
 
+Like queries, if you don't know what the variables should be upon initialization you can provide `null` in the
+constructor:
+
+```ts
+
+const createUser = new CreateUserMutation(
+  // We don't know what variables we want yet!
+  null,
+  // Select the fields you want to retrieve
+  user => user.name.email
+);
+
+// ... Now we do!
+createUser.dispatch({
+  input: {
+    firstName: "Bing",
+    lastName: "Bong",
+    email: "bingbong@example.com",
+    password: "abracadabra"
+  }
+})
+```
+
+**If you call `dispatch` without ever providing variables, it will throw an error at runtime.**
+
 export default (props) => <Docs {...props} />;

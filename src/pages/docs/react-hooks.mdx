@@ -142,7 +142,7 @@ Just like with `useQuery`, you can provide `variables` when you call `dispatch`:
 export const TodoList = observer(({ todos }) => {
   const { data, loading, dispatch } = useMutation(
     () => new DeleteTodoMutation(
-      { id: '<some default>' }, // Side-note, this is weird, and is being considered for an update.
+      null, // At initialization, we don't know what the variables are, and we can't provide sensible defaults.
       todo => todo.title.content,
     ),
     {
