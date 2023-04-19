@@ -45,6 +45,32 @@ export const TodoList = observer(() => {
 });
 ```
 
+You can also make queries lazy if you want to dispatch them yourself:
+
+```ts
+const { data, loading, dispatch } = useQuery(() => new TodosQuery(todo => todo.title.content), { lazy: true });
+
+dispatch();
+```
+
+If you want to provide a dynamic set of variables when you dispatch your query, you can provide them to the `dispatch`
+function returned from the hook:
+
+```ts
+const { data, loading, dispatch } = useQuery(
+  () => new TodosQuery({ sort: 'created_at' }, todo => todo.title.content),
+  { lazy: true }
+);
+
+dispatch({ sort: 'completed_at' });
+
+// If you call dispatch later, it will use the variables it was given upon initialization!
+dispatch(); // Uses { sort: 'created_at' }
+```
+
+**Same goes for `useMutation` described below.**
+
+
 ## `useMutation`
 
 Given the following schema:
@@ -108,15 +134,15 @@ export const EditTodoForm = observer(({ todo }: EditTodoFormProps) => {
 
 > **Note:** See our usage of `todo.set`? The `set` method comes from `TodoBaseModel` as a built-in action.
 
-## Provide arguments to `dispatch`
+## Provide variables dynamically
 
-You can provide arguments to `dispatch` by defining them in the `useMutation` hook:
+Just like with `useQuery`, you can provide `variables` when you call `dispatch`:
 
 ```tsx
 export const TodoList = observer(({ todos }) => {
   const { data, loading, dispatch } = useMutation(
-    (id: string) => new DeleteTodoMutation(
-      { id },
+    () => new DeleteTodoMutation(
+      { id: '<some default>' }, // Side-note, this is weird, and is being considered for an update.
       todo => todo.title.content,
     ),
     {
@@ -135,7 +161,7 @@ export const TodoList = observer(({ todos }) => {
         <div className="Todo">
           <h1>{todo.title}</h1>
           <p>{todo.content}</p>
-          <button onClick={() => dispatch(todo.id)}>Delete</button>
+          <button onClick={() => dispatch({ id: todo.id })}>Delete</button>
         </div>
       ))}
     </div>

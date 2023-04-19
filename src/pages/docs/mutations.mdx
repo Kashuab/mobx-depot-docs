@@ -26,7 +26,7 @@ This will generate a `CreateUserMutation` class that you can use as such:
 import { CreateUserMutation } from "~/models/depot/mutations/CreateUserMutation";
 
 const createUser = new CreateUserMutation(
-  // Mutation arguments
+  // Mutation variables
   {
     input: {
       firstName: "John",
@@ -43,6 +43,30 @@ createUser.dispatch().then(user => {
   // user is a UserModel, which is a MobX observable
   // It can also be null, as described by the schema
 });
+```
+
+If you want to re-use the same mutation instance, you can provide a new set of `variables` when calling `dispatch`:
+
+```ts
+createUser.dispatch({
+  input: {
+    firstName: "Joe",
+    lastName: "Mama",
+    email: "joemama@example.com",
+    password: "abracadabra"
+  }
+})
+
+// ...
+
+createUser.dispatch({
+  input: {
+    firstName: "Bing",
+    lastName: "Bong",
+    email: "bingbong@example.com",
+    password: "abracadabra"
+  }
+})
 ```
 
 export default (props) => <Docs {...props} />;

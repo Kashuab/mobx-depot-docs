@@ -37,6 +37,20 @@ userQuery.dispatch().then(user => {
 });
 ```
 
+If you want to re-use the same query instance, you can provide a new set of `variables` when calling `dispatch`:
+
+```ts
+userQuery.dispatch({ id: 2 })
+
+// ...
+
+userQuery.dispatch({ id: 3 })
+
+// ...
+
+userQuery.dispatch({ id: 4 })
+```
+
 ## Query builder
 
 When constructing queries and mutations with `mobx-depot`, in order to select which fields to retrieve you need to
