@@ -25,7 +25,7 @@ Skip cache, dispatch a network request and **don't cache** the response.
 To set the default cache policy for all queries, use the `defaultCachePolicy` option:
 
 ```ts
-import { initializeDepotClient } from 'path/to/models/depot/rootStore';
+import { initializeDepotClient } from '~/models/depot';
 
 initializeDepotClient('http://your-api.com', {
   defaultCachePolicy: 'cache-first',
@@ -35,7 +35,7 @@ initializeDepotClient('http://your-api.com', {
 If you need a specific cache policy for a given query, you can pass a `cachePolicy` option in the `Query` constructor:
 
 ```ts
-import { PostQuery } from 'path/to/models/depot/queries/PostQuery';
+import { PostQuery } from '~/models/depot';
 
 const query = new PostQuery(
   post => post.title.content,

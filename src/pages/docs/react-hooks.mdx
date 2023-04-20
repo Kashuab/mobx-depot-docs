@@ -25,7 +25,7 @@ You can import `useQuery` and use it like this:
 ```tsx
 import { observer } from 'mobx-react-lite';
 import { useQuery } from "mobx-depot";
-import { TodosQuery } from '../models/depot/queries/TodosQuery';
+import { TodosQuery } from '~/models/depot';
 
 export const TodoList = observer(() => {
   const { data, loading } = useQuery(() => new TodosQuery(todo => todo.title.content));
@@ -98,8 +98,8 @@ This generates a `TodoModel` as well as an `UpdateTodoMutation`. Import `useMuta
 import { observer } from 'mobx-react-lite';
 import { useMutation } from "mobx-depot";
 
-import { TodoModel } from '../models/TodoModel';
-import { UpdateTodoMutation } from '../models/depot/mutations/UpdateTodoMutation';
+import { TodoModel } from '~/models/TodoModel';
+import { UpdateTodoMutation } from '~/models/depot';
 
 type EditTodoFormProps = {
   todo: TodoModel;
@@ -178,7 +178,7 @@ dumb!
 
 ```tsx
 // src/models/TodoModel.ts
-import { UpdateTodoMutation } from '../models/depot/mutations/UpdateTodoMutation';
+import { UpdateTodoMutation } from '~/models/depot';
 
 export class TodoModel extends TodoBaseModel {
   constructor(init: Partial<TodoBaseModel> = {}) {

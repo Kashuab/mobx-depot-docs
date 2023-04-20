@@ -16,7 +16,7 @@ type Query {
 This will generate a `UserQuery` class that you can use as such:
 
 ```js
-import { UserQuery } from "~/models/depot/queries/UserQuery";
+import { UserQuery } from "~/models/depot";
 
 const userQuery = new UserQuery(
   // Query variables
@@ -73,7 +73,7 @@ When constructing queries and mutations with `mobx-depot`, in order to select wh
 provide a function that returns the fields you want to retrieve. Type annotations are provided for your convenience.
 
 ```ts
-import { UserQuery } from "~/models/depot/queries/UserQuery";
+import { UserQuery } from "~/models/depot";
 
 const userQuery = new UserQuery(
   { id: 1 },

@@ -52,6 +52,7 @@ Only use one or the other, it doesn't make much sense to use both `--include` an
 
 - `--react true|false` Include React utilities in generated output (defaults to true)
 - `--idFieldName` Name of the field used to identify object types (defaults to "id")
+- `--depotDirName <name of directory>` Directory that untouchable auto-generated code should be placed in (defaults to "depot")
 
 You can reference these anytime in the CLI: `yarn mobx-depot --help generate`
 
@@ -61,7 +62,7 @@ Your app will have some sort of `src/App.tsx`. You will need to initialize the c
 make requests to your GraphQL API.
 
 ```tsx
-import { initializeDepotClient } from './models/depot/rootStore';
+import { initializeDepotClient } from './models/depot';
 
 // This may be different if you're not using Vite, or have some other environment variable for this.
 const API_URL = import.meta.env.VITE_API_URL;
