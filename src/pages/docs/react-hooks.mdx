@@ -35,7 +35,7 @@ const { loading, data, error, dispatch } = useTodosQuery(
   // Query variables (if applicable)
   { sortBy: "completedAt" },
   todo => todo.title.content.completedAt,
-  { cachePolicy: 'cache-first', lazy: true } // Optional! Combines both `useQuery` and
+  { cachePolicy: 'cache-first', lazy: true } // Optional! Combines both `useQuery` and `TodosQuery` options
 )
 ```
 
